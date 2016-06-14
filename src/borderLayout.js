@@ -1,23 +1,9 @@
-(function (root, factory) {
+require('./borderLayout.scss')
 
-	if (typeof define === 'function' && define.amd) {
-		// AMD. Register as an anonymous module.
-		define(['angular'], factory);
-	} else if (typeof module === 'object' && module.exports) {
-		// Node. Does not work with strict CommonJS, but
-		// only CommonJS-like environments that support module.exports, like Node.
-		// to support bundler like browserify
-		module.exports = factory(require('angular'));
-	} else {
-		// Browser globals (root is window)
-		return factory(root.angular);
-	}
+const angular = require('angular')
 
-}(window, function (angular) {
-
-	const ngModule = angular.module("fa.directive.borderLayout", [])
-
-	ngModule.factory("paneManager", function () {
+const ngModule = angular.module("fa.directive.borderLayout", [])
+	.factory("paneManager", function () {
 		return {
 			panes: {},
 			get: function (paneId) {
@@ -32,7 +18,7 @@
 		};
 	})
 
-	ngModule.factory('Region', function () {
+	.factory('Region', function () {
 
 		/**
 		 * region represents a rectangle container, could be any block dom element(assuming)
@@ -235,7 +221,7 @@
 
 	})
 
-	ngModule.factory('faPaneUtil', function () {
+	.factory('faPaneUtil', function () {
 		function getOrientation(anchor) {
 			switch (anchor) {
 				case "north":
@@ -353,7 +339,7 @@
 		}
 	})
 
-	ngModule.directive("faPane", function ($window, $templateCache, paneManager, faPaneUtil) {
+	.directive("faPane", function ($window, $templateCache, paneManager, faPaneUtil) {
 
 		let promise = null;
 
@@ -812,7 +798,7 @@
 		};
 	})
 
-	ngModule.directive("faPaneToggle", function () {
+	.directive("faPaneToggle", function () {
 		return {
 			restrict: 'A',
 			link: function ($scope, $el, $attrs) {
@@ -824,7 +810,7 @@
 		};
 	})
 
-	ngModule.directive("faPaneResizer", function ($window) {
+	.directive("faPaneResizer", function ($window) {
 
 		/**
 		 * throttle
@@ -1001,7 +987,9 @@
 		};
 	})
 
-	/*the place to place the generated angular templateCache*/
+angular.module("fa.directive.borderLayout")
+	.run(function ($templateCache) {
+		$templateCache.put("template/borderLayout.tpl.html", require('./borderLayout.tpl.html'));
+	})
 
-	return ngModule
-}));
+module.exports = ngModule
