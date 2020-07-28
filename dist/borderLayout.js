@@ -162,7 +162,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		stringToBoolean: function stringToBoolean(str) {
 			var res = str;
 			if (angular.isString(str)) {
-				res = angular.lowercase(str) === 'true';
+				res = str.toLowerCase() === 'true';
 			}
 
 			return !!res;
